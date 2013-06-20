@@ -1,4 +1,4 @@
-﻿/********************
+/********************
  * 'filteredOptions' binding for knockout.js
  * by Sílvia Mur Blanch aka PchiwaN
  * https://github.com/pchiwan/ko-filteredOptions
@@ -156,52 +156,7 @@ ko.extenders.track = function (target, doTrack) {
 	return target;
 };
 
-ko.dependencyDetection = (function () {
-	var _frames = [];
-
-	return {
-		begin: function (callback) {
-			_frames.push({ callback: callback, distinctDependencies:[] });
-		},
-
-		end: function () {
-			_frames.pop();
-		},
-
-		registerDependency: function (subscribable) {
-			if (!ko.isSubscribable(subscribable))
-				throw new Error("Only subscribable things can act as dependencies");
-			if (_frames.length > 0) {
-				var topFrame = _frames[_frames.length - 1];
-				if (!topFrame || ko.utils.arrayIndexOf(topFrame.distinctDependencies, subscribable) >= 0)
-					return;
-				topFrame.distinctDependencies.push(subscribable);
-				topFrame.callback(subscribable);
-			}
-		},
-
-		ignore: function(callback, callbackTarget, callbackArgs) {
-			try {
-				_frames.push(null);
-				return callback.apply(callbackTarget, callbackArgs || []);
-			} finally {
-				_frames.pop();
-			}
-		}
-	};
-})();
-
-$.extend(ko.utils, {
-    getIEVersion: function() {
-		var version = 3, div = document.createElement('div'), iElems = div.getElementsByTagName('i');
-		// Keep constructing conditional HTML blocks until we hit one that resolves to an empty fragment
-		while (
-			div.innerHTML = '<!--[if gt IE ' + (++version) + ']><i></i><![endif]-->',
-			iElems[0]
-		);
-		return version > 4 ? version : undefined;
-	},
-	
+$.extend(ko.utils, {    
 	ensureDropdownSelectionIsConsistentWithModelValue: function (element, modelValue, preferModelValue) {
         if (preferModelValue) {
             if (modelValue !== ko.selectExtensions.readValue(element)) {
@@ -215,62 +170,5 @@ $.extend(ko.utils, {
         if (modelValue !== ko.selectExtensions.readValue(element)) {
             ko.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, 'change']);
         }
-    },
-	
-	ensureSelectElementIsRenderedCorrectly: function(selectElement) {
-		// Workaround for IE9 rendering bug - it doesn't reliably display all the text in dynamically-added select boxes unless you force it to re-render by updating the width.
-		// (See https://github.com/SteveSanderson/knockout/issues/312, http://stackoverflow.com/questions/5908494/select-only-shows-first-char-of-selected-option)
-		if (ko.utils.getIEVersion() >= 9) {
-			var originalWidth = selectElement.style.width;
-			selectElement.style.width = 0;
-			selectElement.style.width = originalWidth;
-		}
-	},
-	
-	tagNameLower: function(element) {
-		// For HTML elements, tagName will always be upper case; for XHTML elements, it'll be lower case.
-		// Possible future optimization: If we know it's an element from an XHTML document (not HTML),
-		// we don't need to do the .toLowerCase() as it will always be lower case anyway.
-		return element && element.tagName && element.tagName.toLowerCase();
-	},
-	
-	forceRefresh: function(node) {
-		// Workaround for an IE9 rendering bug - https://github.com/SteveSanderson/knockout/issues/209		
-		if (ko.utils.getIEVersion() >= 9) {
-			// For text nodes and comment nodes (most likely virtual elements), we will have to refresh the container
-			var elem = node.nodeType == 1 ? node : node.parentNode;
-			if (elem.style)
-				elem.style.zoom = elem.style.zoom;
-		}
-	},
-
-	setTextContent: function(element, textContent) {
-		var value = ko.utils.unwrapObservable(textContent);
-		if ((value === null) || (value === undefined))
-			value = "";
-
-		if (element.nodeType === 3) {
-			element.data = value;
-		} else {
-			// We need there to be exactly one child: a text node.
-			// If there are no children, more than one, or if it's not a text node,
-			// we'll clear everything and create a single text node.
-			var innerTextNode = ko.virtualElements.firstChild(element);
-			if (!innerTextNode || innerTextNode.nodeType != 3 || ko.virtualElements.nextSibling(innerTextNode)) {
-				ko.virtualElements.setDomNodeChildren(element, [document.createTextNode(value)]);
-			} else {
-				innerTextNode.data = value;
-			}
-
-			ko.utils.forceRefresh(element);
-		}
-	},
-	
-	setOptionNodeSelectionState: function (optionNode, isSelected) {
-		// IE6 sometimes throws "unknown error" if you try to write to .selected directly, whereas Firefox struggles with setAttribute. Pick one based on browser.
-		if (ko.utils.getIEVersion() < 7)
-			optionNode.setAttribute("selected", isSelected);
-		else
-			optionNode.selected = isSelected;
-	}
+    }
 });

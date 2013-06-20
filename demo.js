@@ -52,10 +52,10 @@ function AppViewModel() {
 	
 	/////////////setup for example 2
 	this.Attendees = ko.observableArray([
-		new attendeeviewmodel('john'),
-		new attendeeviewmodel('paul'),
-		new attendeeviewmodel('george'),
-		new attendeeviewmodel('ringo')
+		new AttendeeViewModel('John'),
+		new AttendeeViewModel('Paul'),
+		new AttendeeViewModel('George'),
+		new AttendeeViewModel('Ringo')
 		// new AttendeeViewModel('John', 1),
 		// new AttendeeViewModel('Paul', 2),
 		// new AttendeeViewModel('George', 3),
