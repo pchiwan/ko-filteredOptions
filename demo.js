@@ -52,14 +52,14 @@ function AppViewModel() {
 	
 	/////////////setup for example 2
 	this.Attendees = ko.observableArray([
-		// new AttendeeViewModel('John'),
-		// new AttendeeViewModel('Paul'),
-		// new AttendeeViewModel('George'),
-		// new AttendeeViewModel('Ringo')
-		new AttendeeViewModel('John', 1),
-		new AttendeeViewModel('Paul', 2),
-		new AttendeeViewModel('George', 3),
-		new AttendeeViewModel('Ringo', 4)
+		new attendeeviewmodel('john'),
+		new attendeeviewmodel('paul'),
+		new attendeeviewmodel('george'),
+		new attendeeviewmodel('ringo')
+		// new AttendeeViewModel('John', 1),
+		// new AttendeeViewModel('Paul', 2),
+		// new AttendeeViewModel('George', 3),
+		// new AttendeeViewModel('Ringo', 4)
 	]);
 	
 	this.Shows = ko.observableArray([
@@ -73,7 +73,6 @@ function AppViewModel() {
 		self.Shows()[i].Id(i + 1);
 	}
 }
-
 
 //apply ko!
 ko.applyBindings(new AppViewModel());
