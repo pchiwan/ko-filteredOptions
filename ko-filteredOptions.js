@@ -4,6 +4,8 @@
  * https://github.com/pchiwan/ko-filteredOptions
  ********************/
 
+//#region FILTERED OPTIONS BINDING
+ 
 //'filteredOptions' binding (shamelessly copied and enhanced from the original 'options' binding)
 //Allows us to filter some options from the bound collection, so that they won't be appended to the select control
 //Usage: 
@@ -15,13 +17,13 @@
 // i.e.: optionsFiltering: { propertyName: 'IsActive', propertyValue: false, exceptionValue: 42 }
 ko.bindingHandlers.filteredOptions = {
     update: function (element, valueAccessor, allBindingsAccessor) {
-        if (ko.utils.tagNameLower(element) !== 'select') {
+        if (ko.exposed.tagNameLower(element) !== 'select') {
             throw new Error('options binding applies only to SELECT elements');
         }
 
         var selectWasPreviouslyEmpty = element.length === 0;
         var previousSelectedValues = ko.utils.arrayMap(ko.utils.arrayFilter(element.childNodes, function (node) {
-            return node.tagName && (ko.utils.tagNameLower(node) === 'option') && node.selected;
+            return node.tagName && (ko.exposed.tagNameLower(node) === 'option') && node.selected;
         }), function (node) {
             return ko.selectExtensions.readValue(node) || node.innerText || node.textContent;
         });
@@ -77,7 +79,7 @@ ko.bindingHandlers.filteredOptions = {
 
                 // Apply some text to the option element
                 var optionText = applyToObject(arrayEntry, allBindings['optionsText'], optionValue);
-                ko.utils.setTextContent(option, optionText);
+                ko.exposed.setTextContent(option, optionText);
 
                 //* PCHIWAN ************************************************************************//
                 // Hey! Here's where my magic trick begins! 
@@ -112,7 +114,7 @@ ko.bindingHandlers.filteredOptions = {
             var countSelectionsRetained = 0;
             for (var i = 0, j = newOptions.length; i < j; i++) {
                 if (ko.utils.arrayIndexOf(previousSelectedValues, ko.selectExtensions.readValue(newOptions[i])) >= 0) {
-                    ko.utils.setOptionNodeSelectionState(newOptions[i], true);
+                    ko.exposed.setOptionNodeSelectionState(newOptions[i], true);
                     countSelectionsRetained++;
                 }
             }
@@ -123,14 +125,18 @@ ko.bindingHandlers.filteredOptions = {
                 // Ensure consistency between model value and selected option.
                 // If the dropdown is being populated for the first time here (or was otherwise previously empty),
                 // the dropdown selection state is meaningless, so we preserve the model value.
-                ko.utils.ensureDropdownSelectionIsConsistentWithModelValue(element, ko.utils.peekObservable(allBindings['value']), /* preferModelValue */true);
+                ko.exposed.ensureDropdownSelectionIsConsistentWithModelValue(element, ko.utils.peekObservable(allBindings['value']), /* preferModelValue */true);
             }
 
             // Workaround for IE9 bug
-            ko.utils.ensureSelectElementIsRenderedCorrectly(element);
+            ko.exposed.ensureSelectElementIsRenderedCorrectly(element);
         }
     }
 };
+
+//#endregion
+
+//#region EXTENDERS
 
 ko.extenders.track = function (target, doTrack) {
 	// <summary>Will track property changes -extender courtesy of https://github.com/egonsch</summary>
@@ -156,51 +162,47 @@ ko.extenders.track = function (target, doTrack) {
 	return target;
 };
 
-ko.dependencyDetection = (function () {
-	var _frames = [];
+//#endregion
 
-	return {
-		begin: function (callback) {
-			_frames.push({ callback: callback, distinctDependencies:[] });
-		},
+//#region EXPOSED UTILS FUNCTIONS 
 
-		end: function () {
-			_frames.pop();
-		},
+ko.exposed = {
+	dependencyDetection: (function () {
+		var _frames = [];
 
-		registerDependency: function (subscribable) {
-			if (!ko.isSubscribable(subscribable))
-				throw new Error("Only subscribable things can act as dependencies");
-			if (_frames.length > 0) {
-				var topFrame = _frames[_frames.length - 1];
-				if (!topFrame || ko.utils.arrayIndexOf(topFrame.distinctDependencies, subscribable) >= 0)
-					return;
-				topFrame.distinctDependencies.push(subscribable);
-				topFrame.callback(subscribable);
-			}
-		},
+		return {
+			begin: function (callback) {
+				_frames.push({ callback: callback, distinctDependencies:[] });
+			},
 
-		ignore: function(callback, callbackTarget, callbackArgs) {
-			try {
-				_frames.push(null);
-				return callback.apply(callbackTarget, callbackArgs || []);
-			} finally {
+			end: function () {
 				_frames.pop();
-			}
-		}
-	};
-})();
+			},
 
-$.extend(ko.utils, {
-    getIEVersion: function() {
-		var version = 3, div = document.createElement('div'), iElems = div.getElementsByTagName('i');
-		// Keep constructing conditional HTML blocks until we hit one that resolves to an empty fragment
-		while (
-			div.innerHTML = '<!--[if gt IE ' + (++version) + ']><i></i><![endif]-->',
-			iElems[0]
-		);
-		return version > 4 ? version : undefined;
-	},
+			registerDependency: function (subscribable) {
+				if (!ko.isSubscribable(subscribable)) {
+					throw new Error("Only subscribable things can act as dependencies");
+				}
+				if (_frames.length > 0) {
+					var topFrame = _frames[_frames.length - 1];
+					if (!topFrame || ko.utils.arrayIndexOf(topFrame.distinctDependencies, subscribable) >= 0) {
+						return;
+					}
+					topFrame.distinctDependencies.push(subscribable);
+					topFrame.callback(subscribable);
+				}
+			},
+
+			ignore: function(callback, callbackTarget, callbackArgs) {
+				try {
+					_frames.push(null);
+					return callback.apply(callbackTarget, callbackArgs || []);
+				} finally {
+					_frames.pop();
+				}
+			}
+		};
+	})(),
 	
 	ensureDropdownSelectionIsConsistentWithModelValue: function (element, modelValue, preferModelValue) {
         if (preferModelValue) {
@@ -213,37 +215,40 @@ $.extend(ko.utils, {
         // If they aren't equal, either we prefer the dropdown value, or the model value couldn't be represented, so either way,
         // change the model value to match the dropdown.
         if (modelValue !== ko.selectExtensions.readValue(element)) {
-            ko.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, 'change']);
+            ko.exposed.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, 'change']);
         }
     },
 	
 	ensureSelectElementIsRenderedCorrectly: function(selectElement) {
 		// Workaround for IE9 rendering bug - it doesn't reliably display all the text in dynamically-added select boxes unless you force it to re-render by updating the width.
 		// (See https://github.com/SteveSanderson/knockout/issues/312, http://stackoverflow.com/questions/5908494/select-only-shows-first-char-of-selected-option)
-		if (ko.utils.getIEVersion() >= 9) {
+		if (ko.exposed.getIEVersion() >= 9) {
 			var originalWidth = selectElement.style.width;
 			selectElement.style.width = 0;
 			selectElement.style.width = originalWidth;
 		}
 	},
 	
-	tagNameLower: function(element) {
-		// For HTML elements, tagName will always be upper case; for XHTML elements, it'll be lower case.
-		// Possible future optimization: If we know it's an element from an XHTML document (not HTML),
-		// we don't need to do the .toLowerCase() as it will always be lower case anyway.
-		return element && element.tagName && element.tagName.toLowerCase();
-	},
-	
 	forceRefresh: function(node) {
 		// Workaround for an IE9 rendering bug - https://github.com/SteveSanderson/knockout/issues/209		
-		if (ko.utils.getIEVersion() >= 9) {
+		if (ko.exposed.getIEVersion() >= 9) {
 			// For text nodes and comment nodes (most likely virtual elements), we will have to refresh the container
 			var elem = node.nodeType == 1 ? node : node.parentNode;
 			if (elem.style)
 				elem.style.zoom = elem.style.zoom;
 		}
 	},
-
+	
+	getIEVersion: function() {
+		var version = 3, div = document.createElement('div'), iElems = div.getElementsByTagName('i');
+		// Keep constructing conditional HTML blocks until we hit one that resolves to an empty fragment
+		while (
+			div.innerHTML = '<!--[if gt IE ' + (++version) + ']><i></i><![endif]-->',
+			iElems[0]
+		);
+		return version > 4 ? version : undefined;
+	},
+	
 	setTextContent: function(element, textContent) {
 		var value = ko.utils.unwrapObservable(textContent);
 		if ((value === null) || (value === undefined))
@@ -262,15 +267,24 @@ $.extend(ko.utils, {
 				innerTextNode.data = value;
 			}
 
-			ko.utils.forceRefresh(element);
+			ko.exposed.forceRefresh(element);
 		}
 	},
 	
 	setOptionNodeSelectionState: function (optionNode, isSelected) {
 		// IE6 sometimes throws "unknown error" if you try to write to .selected directly, whereas Firefox struggles with setAttribute. Pick one based on browser.
-		if (ko.utils.getIEVersion() < 7)
+		if (ko.exposed.getIEVersion() < 7)
 			optionNode.setAttribute("selected", isSelected);
 		else
 			optionNode.selected = isSelected;
+	},
+	
+	tagNameLower: function(element) {
+		// For HTML elements, tagName will always be upper case; for XHTML elements, it'll be lower case.
+		// Possible future optimization: If we know it's an element from an XHTML document (not HTML),
+		// we don't need to do the .toLowerCase() as it will always be lower case anyway.
+		return element && element.tagName && element.tagName.toLowerCase();
 	}
-});
+};
+
+//#endregion

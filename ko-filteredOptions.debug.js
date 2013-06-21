@@ -4,6 +4,8 @@
  * https://github.com/pchiwan/ko-filteredOptions
  ********************/
 
+ //#region FILTERED OPTIONS BINDING
+ 
 //'filteredOptions' binding (shamelessly copied and enhanced from the original 'options' binding)
 //Allows us to filter some options from the bound collection, so that they won't be appended to the select control
 //Usage: 
@@ -123,7 +125,7 @@ ko.bindingHandlers.filteredOptions = {
                 // Ensure consistency between model value and selected option.
                 // If the dropdown is being populated for the first time here (or was otherwise previously empty),
                 // the dropdown selection state is meaningless, so we preserve the model value.
-                ko.utils.ensureDropdownSelectionIsConsistentWithModelValue(element, ko.utils.peekObservable(allBindings['value']), /* preferModelValue */true);
+                ko.exposed.ensureDropdownSelectionIsConsistentWithModelValue(element, ko.utils.peekObservable(allBindings['value']), /* preferModelValue */true);
             }
 
             // Workaround for IE9 bug
@@ -131,6 +133,10 @@ ko.bindingHandlers.filteredOptions = {
         }
     }
 };
+
+//#endregion
+
+//#region EXTENDERS
 
 ko.extenders.track = function (target, doTrack) {
 	// <summary>Will track property changes -extender courtesy of https://github.com/egonsch</summary>
@@ -156,7 +162,11 @@ ko.extenders.track = function (target, doTrack) {
 	return target;
 };
 
-$.extend(ko.utils, {    
+//#endregion
+
+//#region EXPOSED UTILS FUNCTIONS 
+
+ko.exposed = {
 	ensureDropdownSelectionIsConsistentWithModelValue: function (element, modelValue, preferModelValue) {
         if (preferModelValue) {
             if (modelValue !== ko.selectExtensions.readValue(element)) {
@@ -171,4 +181,6 @@ $.extend(ko.utils, {
             ko.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, 'change']);
         }
     }
-});
+};
+
+//#endregion
