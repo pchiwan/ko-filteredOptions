@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Ko-filteredoptions : A knockout custom binding based on the 'options' binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
+    <meta name="description" content="Ko-filteredoptions : A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/pchiwan/ko-filteredOptions">View on GitHub</a>
 
           <h1 id="project_title">Ko-filteredoptions</h1>
-          <h2 id="project_tagline">A knockout custom binding based on the 'options' binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
+          <h2 id="project_tagline">A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/pchiwan/ko-filteredOptions/zipball/master">Download this project as a .zip file</a>
@@ -32,36 +32,51 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding">codecoding</a> and I were working on at the time.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>We had a series of selection controls the sources of which would be retrieved from server on page load through AJAX requests, and then populated through the use of observable arrays and the 'options' binding. These controls were part of a form that was, in turn, also data-bound to a viewmodel.</p>
+
+<p>For some reason we needed that, at some point, some of the options in our selection controls could be hidden, filtered out, so that they could not be selected. Removing these options from their respective observable arrays was not an acceptable solution: our data sources had to remain unchanged. Since these "particular options" had to be filtered according to a certain property's value in our form's data-bound viewmodel, we came up with the idea for our own custom 'options' binding.</p>
+
+<h3>
+<a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h3>
+
+<p>It's probably easier to understand with an example so here it goes. We define to viewmodels, <em>Guest</em> and <em>Meal</em>.</p>
+
+<pre><code>function Guest (name, isVegan) {    
+  this.Name = ko.observable(name ? name : '');
+  this.IsVegan = ko.observable(isVegan ? isVegan : false);
+  this.SelectedMeal = ko.observable();
+}
+
+function Meal (name, isApt) {
+  this.Id = ko.observable();
+  this.Name = ko.observable(name ? name : '');
+  this.IsAptForVegans = ko.observable(isApt ? isApt : false);
+}
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>As you can see, when instantiating a <em>Guest</em> we must specify the guest's name and whether he/she is vegan or not. In turn, when instantiating a <em>Meal</em> we must specify its name and whether it is apt for vegans or not. Next we define a collection of <em>Guests</em> and a collection of <em>Meals</em>. ``</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<pre><code>this.Guests = ko.observableArray([
+  new Guest('Ernie', false),
+  new Guest('Bert', false),
+  new Guest('Cookie monster', true)     
+]);
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+this.Meals = ko.observableArray([
+  new Meal('Pepperoni pizza', false),
+  new Meal('Chicken fingers', false),
+  new Meal('Chocolate cookies', true),
+  new Meal('Cheese burger', false),
+  new Meal('Fruit salad', true)
+]);
+</code></pre>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>
+</p>
       </section>
     </div>
 
