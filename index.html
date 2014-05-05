@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="ko-filteredOptions : A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>ko-filteredOptions by pchiwan</title>
+    <title>ko-filteredOptions</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>ko-filteredOptions</h1>
-        <h2>A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
-        <a href="https://github.com/pchiwan/ko-filteredOptions" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pchiwan/ko-filteredOptions">View on GitHub</a>
+
+          <h1 id="project_title">ko-filteredOptions</h1>
+          <h2 id="project_tagline">A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/pchiwan/ko-filteredOptions/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/pchiwan/ko-filteredOptions/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a> and I were working on at the time.</p>
@@ -167,12 +170,12 @@ So the parameters we'll be using are those of the <em>options</em> binding, plus
 <ul>
 <li>
 <strong>propertyName</strong>. </li>
-</ul><p>Indicates the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the <code>&lt;select&gt;</code> control. It must be written between single quotes. I.e.: <code>propertyName: 'IsAvailable'</code>.</p>
+</ul><p>It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the <code>&lt;select&gt;</code> control. It must be written between single quotes. I.e.: <code>propertyName: 'IsAvailable'</code>.</p>
 
 <ul>
 <li>
 <strong>propertyValue</strong>. </li>
-</ul><p>Indicates which value should the specified <code>propertyName</code> have in order for the object to be kept from being attached as an <code>&lt;option&gt;</code> to the <code>&lt;select&gt;</code> control. I.e.: <code>propertyValue: false</code>.</p>
+</ul><p>Which value will cause the object to be ruled out when the property with specified <code>propertyName</code> is evaluated. Mind this is negative logic: if the property's value is equal to this specified value, the object will NOT be attached to the <code>&lt;select&gt;</code> control. I.e.: <code>propertyValue: false</code>.</p>
 
 <ul>
 <li>
@@ -229,25 +232,18 @@ So the parameters we'll be using are those of the <em>options</em> binding, plus
 <span class="nt">&lt;/div&gt;</span>
 <span class="c">&lt;!-- /ko --&gt;</span>
 </pre></div>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/pchiwan/ko-filteredOptions/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/pchiwan/ko-filteredOptions/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/pchiwan/ko-filteredOptions"></a> is maintained by <a href="https://github.com/pchiwan">pchiwan</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-  
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ko-filteredOptions maintained by <a href="https://github.com/pchiwan">pchiwan</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
