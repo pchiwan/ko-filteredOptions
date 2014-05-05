@@ -31,8 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
+        <h2>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding">codecoding</a> and I were working on at the time.</p>
 
@@ -40,8 +40,8 @@
 
 <p>For some reason we needed that, at some point, some of the options in our selection controls could be hidden, filtered out, so that they could not be selected. Removing these options from their respective observable arrays was not an acceptable solution: our data sources had to remain unchanged. Since these "particular options" had to be filtered according to a certain property's value in our form's data-bound viewmodel, we came up with the idea for our own custom 'options' binding.</p>
 
-<h3>
-<a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h3>
+<h2>
+<a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h2>
 
 <p>It's probably easier to understand with an example so here it goes. We define to viewmodels, <em>Guest</em> and <em>Meal</em>.</p>
 
@@ -58,7 +58,7 @@ function Meal (name, isApt) {
 }
 </code></pre>
 
-<p>As you can see, when instantiating a <em>Guest</em> we must specify the guest's name and whether he/she is vegan or not. In turn, when instantiating a <em>Meal</em> we must specify its name and whether it is apt for vegans or not. Next we define a collection of <em>Guests</em> and a collection of <em>Meals</em>. ``</p>
+<p>As you can see, when instantiating a <em>Guest</em> we must specify the guest's name and whether he/she is vegan or not. In turn, when instantiating a <em>Meal</em> we must specify its name and whether it is apt for vegans or not. Next we define a collection of <em>Guests</em> and a collection of <em>Meals</em>. </p>
 
 <pre><code>this.Guests = ko.observableArray([
   new Guest('Ernie', false),
@@ -75,8 +75,24 @@ this.Meals = ko.observableArray([
 ]);
 </code></pre>
 
-<p>
-</p>
+<p>Now, as you may have already imagined, our intention is to pair each <em>Guest</em> with a <em>Meal</em>. The collection of meals available to each guest will be filtered according to whether or not the <em>Guest</em>'s property <em>IsVegan</em> is set to true. Head to <a href="http://jsfiddle.net/pchiwan/c55g2/4/">this fiddle</a> to see it working. Here's the snippet of html code where you can see the our custom data binding <em>filteredOptions</em>.</p>
+
+<pre><code>&lt;!-- ko foreach: { data: Guests(), as: 'guest' } --&gt;
+&lt;div class="guest"&gt;
+  &lt;div class="left"&gt;
+    &lt;b&gt;Guest: &lt;/b&gt;&lt;span data-bind="text: guest.Name"&gt;&lt;/span&gt;&lt;br&gt;
+    &lt;b&gt;Is vegan? &lt;/b&gt;&lt;input type="checkbox" data-bind="checked: guest.IsVegan"&gt;&lt;/input&gt;
+  &lt;/div&gt;
+  &lt;div class="right"&gt;
+    &lt;span&gt;&lt;b&gt;Meal of choice:&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+    &lt;select data-bind="filteredOptions: $root.Meals, optionsFiltering: { propertyName: 'IsAptForVegans', propertyValue: !guest.IsVegan() }, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Choose a meal', value: guest.SelectedMeal"&gt;&lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- /ko --&gt;
+</code></pre>
+
+<h2>
+<a name="and-how-does-it-work" class="anchor" href="#and-how-does-it-work"><span class="octicon octicon-link"></span></a>And how does it work?</h2>
       </section>
     </div>
 
