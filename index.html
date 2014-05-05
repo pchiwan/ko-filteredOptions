@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Ko-filteredoptions : A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
+    <meta name="description" content="ko-filteredOptions : A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Ko-filteredoptions</title>
+    <title>ko-filteredOptions</title>
   </head>
 
   <body>
@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/pchiwan/ko-filteredOptions">View on GitHub</a>
 
-          <h1 id="project_title">Ko-filteredoptions</h1>
+          <h1 id="project_title">ko-filteredOptions</h1>
           <h2 id="project_tagline">A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
 
             <section id="downloads">
@@ -34,72 +34,88 @@
         <h2>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
-<p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding">codecoding</a> and I were working on at the time.</p>
+<p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a> and I were working on at the time.</p>
 
-<p>We had a series of selection controls the sources of which would be retrieved from server on page load through AJAX requests, and then populated through the use of observable arrays and the 'options' binding. These controls were part of a form that was, in turn, also data-bound to a viewmodel.</p>
+<p>We had a series of selection controls the sources of which would be retrieved from server on page load through AJAX requests, and then populated through the use of observable arrays and the <em>options</em> binding. These controls were part of a form that was, in turn, also data-bound to a viewmodel.</p>
 
-<p>For some reason we needed that, at some point, some of the options in our selection controls could be hidden, filtered out, so that they could not be selected. Removing these options from their respective observable arrays was not an acceptable solution: our data sources had to remain unchanged. Since these "particular options" had to be filtered according to a certain property's value in our form's data-bound viewmodel, we came up with the idea for our own custom 'options' binding.</p>
+<p>For some reason we needed that, at some point, some of the options in our selection controls could be hidden, filtered out, so that they could not be selected. Removing these options from their respective observable arrays was not an acceptable solution: our data sources had to remain unchanged. Since these "particular options" had to be filtered according to a certain property's value in our form's data-bound viewmodel, we came up with the idea for our own custom <em>options</em> binding.</p>
 
 <h2>
 <a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h2>
 
 <p>It's probably easier to understand with an example so here it goes. We define to viewmodels, <em>Guest</em> and <em>Meal</em>.</p>
 
-<pre><code>function Guest (name, isVegan) {    
-  this.Name = ko.observable(name ? name : '');
-  this.IsVegan = ko.observable(isVegan ? isVegan : false);
-  this.SelectedMeal = ko.observable();
-}
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">Guest</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">isVegan</span><span class="p">)</span> <span class="p">{</span>    
+  <span class="k">this</span><span class="p">.</span><span class="nx">Name</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">(</span><span class="nx">name</span> <span class="o">?</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">''</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">IsVegan</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">(</span><span class="nx">isVegan</span> <span class="o">?</span> <span class="nx">isVegan</span> <span class="o">:</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">SelectedMeal</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">();</span>
+<span class="p">}</span>
 
-function Meal (name, isApt) {
-  this.Id = ko.observable();
-  this.Name = ko.observable(name ? name : '');
-  this.IsAptForVegans = ko.observable(isApt ? isApt : false);
-}
-</code></pre>
+<span class="kd">function</span> <span class="nx">Meal</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">isApt</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">Id</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">();</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">Name</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">(</span><span class="nx">name</span> <span class="o">?</span> <span class="nx">name</span> <span class="o">:</span> <span class="s1">''</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">IsAptForVegans</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observable</span><span class="p">(</span><span class="nx">isApt</span> <span class="o">?</span> <span class="nx">isApt</span> <span class="o">:</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 
 <p>As you can see, when instantiating a <em>Guest</em> we must specify the guest's name and whether he/she is vegan or not. In turn, when instantiating a <em>Meal</em> we must specify its name and whether it is apt for vegans or not. Next we define a collection of <em>Guests</em> and a collection of <em>Meals</em>. </p>
 
-<pre><code>this.Guests = ko.observableArray([
-  new Guest('Ernie', false),
-  new Guest('Bert', false),
-  new Guest('Cookie monster', true)     
-]);
+<div class="highlight highlight-javascript"><pre><span class="k">this</span><span class="p">.</span><span class="nx">Guests</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">([</span>
+  <span class="k">new</span> <span class="nx">Guest</span><span class="p">(</span><span class="s1">'Ernie'</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Guest</span><span class="p">(</span><span class="s1">'Bert'</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Guest</span><span class="p">(</span><span class="s1">'Cookie monster'</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>     
+<span class="p">]);</span>
 
-this.Meals = ko.observableArray([
-  new Meal('Pepperoni pizza', false),
-  new Meal('Chicken fingers', false),
-  new Meal('Chocolate cookies', true),
-  new Meal('Cheese burger', false),
-  new Meal('Fruit salad', true)
-]);
-</code></pre>
+<span class="k">this</span><span class="p">.</span><span class="nx">Meals</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">([</span>
+  <span class="k">new</span> <span class="nx">Meal</span><span class="p">(</span><span class="s1">'Pepperoni pizza'</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Meal</span><span class="p">(</span><span class="s1">'Chicken fingers'</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Meal</span><span class="p">(</span><span class="s1">'Chocolate cookies'</span><span class="p">,</span> <span class="kc">true</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Meal</span><span class="p">(</span><span class="s1">'Cheese burger'</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Meal</span><span class="p">(</span><span class="s1">'Fruit salad'</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">]);</span>
+</pre></div>
 
 <p>Now, as you may have already imagined, our intention is to pair each <em>Guest</em> with a <em>Meal</em>. The collection of meals available to each guest will be filtered according to whether or not the <em>Guest</em>'s property <em>IsVegan</em> is set to true. Head to <a href="http://jsfiddle.net/pchiwan/c55g2/4/">this fiddle</a> to see it working. Here's the snippet of html code where you can see the our custom data binding <em>filteredOptions</em>.</p>
 
-<pre><code>&lt;!-- ko foreach: { data: Guests(), as: 'guest' } --&gt;
-&lt;div class="guest"&gt;
-  &lt;div class="left"&gt;
-    &lt;b&gt;Guest: &lt;/b&gt;&lt;span data-bind="text: guest.Name"&gt;&lt;/span&gt;&lt;br&gt;
-    &lt;b&gt;Is vegan? &lt;/b&gt;&lt;input type="checkbox" data-bind="checked: guest.IsVegan"&gt;&lt;/input&gt;
-  &lt;/div&gt;
-  &lt;div class="right"&gt;
-    &lt;span&gt;&lt;b&gt;Meal of choice:&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
-    &lt;select data-bind="filteredOptions: $root.Meals, optionsFiltering: { propertyName: 'IsAptForVegans', propertyValue: !guest.IsVegan() }, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Choose a meal', value: guest.SelectedMeal"&gt;&lt;/select&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;!-- /ko --&gt;
-</code></pre>
+<div class="highlight highlight-html"><pre><span class="c">&lt;!-- ko foreach: { data: Guests(), as: 'guest' } --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"guest"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;b&gt;</span>Guest: <span class="nt">&lt;/b&gt;&lt;span</span> <span class="na">data-bind=</span><span class="s">"text: guest.Name"</span><span class="nt">&gt;&lt;/span&gt;&lt;br&gt;</span>
+    <span class="nt">&lt;b&gt;</span>Is vegan? <span class="nt">&lt;/b&gt;&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">data-bind=</span><span class="s">"checked: guest.IsVegan"</span><span class="nt">&gt;&lt;/input&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"right"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span&gt;&lt;b&gt;</span>Meal of choice:<span class="nt">&lt;/b&gt;&lt;/span&gt;&lt;br&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">data-bind=</span><span class="s">"filteredOptions: $root.Meals, optionsFiltering: { propertyName: 'IsAptForVegans', propertyValue: !guest.IsVegan() }, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Choose a meal', value: guest.SelectedMeal"</span><span class="nt">&gt;&lt;/select&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="c">&lt;!-- /ko --&gt;</span>
+</pre></div>
 
 <h2>
-<a name="and-how-does-it-work" class="anchor" href="#and-how-does-it-work"><span class="octicon octicon-link"></span></a>And how does it work?</h2>
+<a name="how-does-it-work" class="anchor" href="#how-does-it-work"><span class="octicon octicon-link"></span></a>How does it work?</h2>
+
+<p>Basically I copied the code of the original <em>options</em> binding and enhanced it by adding the tiny snippet of logic that does our magic trick. The only drawback is that, in order for it all to work, we also had to copy some Knockout's private utility methods in order to expose them (because they are not exposed in the production version).</p>
+
+<h2>
+<a name="and-how-do-i-use-it" class="anchor" href="#and-how-do-i-use-it"><span class="octicon octicon-link"></span></a>And how do I use it?</h2>
+
+<p>You must use the <em>filteredOptions</em> data binding instead of the original <em>options</em> binding. So the binding's parameters are the same, but we've added a few more.</p>
+
+<ul>
+<li>
+<strong>propertyName</strong>:</li>
+<li>
+<strong>propertyValue</strong>:</li>
+<li>
+<strong>exceptionValue</strong>:</li>
+</ul>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Ko-filteredoptions maintained by <a href="https://github.com/pchiwan">pchiwan</a></p>
+        <p class="copyright">ko-filteredOptions maintained by <a href="https://github.com/pchiwan">pchiwan</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
