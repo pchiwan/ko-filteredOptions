@@ -164,7 +164,8 @@ ko.extenders.track = function (target, doTrack) {
 
 //#endregion
 
-//#region EXPOSED UTILS FUNCTIONS 
+//#region EXPOSED UTILS FUNCTIONS
+//these are Knockout's utility methods that are not exposed in the production version so we had to copy them because they are used by our filteredOptions binding
 
 ko.exposed = {
 	dependencyDetection: (function () {
