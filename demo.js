@@ -1,24 +1,24 @@
 
 /////////////view models for example 1
-function GuestViewModel(name, isVegan) {	
+function Guest(name, isVegan) {	
 	this.Name = ko.observable(name ? name : '');
 	this.IsVegan = ko.observable(isVegan ? isVegan : false);
 	this.SelectedMeal = ko.observable();
 }
 
-function MealViewModel(name, isApt) {
+function Meal(name, isApt) {
 	this.Id = ko.observable();
 	this.Name = ko.observable(name ? name : '');
 	this.IsAptForVegans = ko.observable(isApt ? isApt : false);
 }
 
 /////////////view models for example 2
-function AttendeeViewModel(name, show) {
+function Attendee(name, show) {
 	this.Name = ko.observable(name ? name : '');
 	this.SelectedShow = ko.observable(show ? show : null).extend({ track: true });
 }
 
-function ShowViewModel(name, isAvailable) {
+function Show(name, isAvailable) {
 	this.Id = ko.observable();
 	this.Name = ko.observable(name ? name : '');
 	this.IsAvailable = ko.observable(isAvailable ? isAvailable : false);
@@ -31,18 +31,18 @@ function AppViewModel() {
 	/////////////setup for example 1
 	//define the guests array
 	this.Guests = ko.observableArray([
-		new GuestViewModel('Ernie', false),
-		new GuestViewModel('Bert', false),
-		new GuestViewModel('Cookie monster', true)		
+		new Guest('Ernie', false),
+		new Guest('Bert', false),
+		new Guest('Cookie monster', true)		
 	]);
 	
 	//define the meals array
 	this.Meals = ko.observableArray([
-		new MealViewModel('Pepperoni pizza', false),
-		new MealViewModel('Chicken fingers', false),
-		new MealViewModel('Chocolate cookies', true),
-		new MealViewModel('Cheese burger', false),
-		new MealViewModel('Fruit salad', true)
+		new Meal('Pepperoni pizza', false),
+		new Meal('Chicken fingers', false),
+		new Meal('Chocolate cookies', true),
+		new Meal('Cheese burger', false),
+		new Meal('Fruit salad', true)
 	]);
 	
 	//assign an integer Id to each meal
@@ -52,23 +52,20 @@ function AppViewModel() {
 	
 	/////////////setup for example 2
 	this.Attendees = ko.observableArray([
-		new AttendeeViewModel('John'),
-		new AttendeeViewModel('Paul'),
-		new AttendeeViewModel('George'),
-		new AttendeeViewModel('Ringo')
-		// new AttendeeViewModel('John', 1),
-		// new AttendeeViewModel('Paul', 2),
-		// new AttendeeViewModel('George', 3),
-		// new AttendeeViewModel('Ringo', 4)
+		new Attendee('John', 1),
+		new Attendee('Paul', 2),
+		new Attendee('George', 3),
+		new Attendee('Ringo', 4)
 	]);
 	
 	this.Shows = ko.observableArray([
-		new ShowViewModel('Grease', true),
-		new ShowViewModel('Mamma mia!', true),
-		new ShowViewModel('The phantom of the opera', true),
-		new ShowViewModel('We will rock you', true)
+		new Show('Grease', true),
+		new Show('Mamma mia!', true),
+		new Show('The phantom of the opera', true),
+		new Show('We will rock you', true)
 	]);
 	
+	//assign an integer Id to each show
 	for (i=0; i<self.Shows().length; i++) {
 		self.Shows()[i].Id(i + 1);
 	}
