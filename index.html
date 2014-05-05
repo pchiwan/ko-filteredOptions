@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="ko-filteredOptions : A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control." />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>ko-filteredOptions</title>
+    <title>ko-filteredOptions by pchiwan</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>ko-filteredOptions</h1>
+        <h2>A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
+        <a href="https://github.com/pchiwan/ko-filteredOptions" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/pchiwan/ko-filteredOptions">View on GitHub</a>
-
-          <h1 id="project_title">ko-filteredOptions</h1>
-          <h2 id="project_tagline">A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/pchiwan/ko-filteredOptions/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/pchiwan/ko-filteredOptions/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a> and I were working on at the time.</p>
@@ -60,10 +57,10 @@
 <p>As you can see, when instantiating an <em>Attendee</em> we must specify the attendees's name and, optionally, a show identifier. In turn, when instantiating a <em>Show</em> we must specify its name and whether it is available or not. Next we define a collection of <em>Attendees</em> and a collection of <em>Shows</em>. </p>
 
 <div class="highlight highlight-javascript"><pre><span class="k">this</span><span class="p">.</span><span class="nx">Attendees</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">([</span>
-  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'Paul'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'George'</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'Ringo'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'John'</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'Paul'</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'George'</span><span class="p">),</span>
+  <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'Ringo'</span><span class="p">)</span>
 <span class="p">]);</span>
 
 <span class="k">this</span><span class="p">.</span><span class="nx">Shows</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">([</span>
@@ -113,9 +110,9 @@
 <p>I worked around this issue thanks to a very simple but very powerful Knockout extender implemented by my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a>, so the credit for the following snippet of code goes to him.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">ko</span><span class="p">.</span><span class="nx">extenders</span><span class="p">.</span><span class="nx">track</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">doTrack</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">//&lt;summary&gt;Will track property changes&lt;/summary&gt;</span>
-  <span class="c1">//&lt;param name="target" type="Object"&gt;The observable&lt;/param&gt;</span>
-  <span class="c1">//&lt;param name="doTrack" type="boolean"&gt;true to track the observable, false otherwise&lt;/param&gt;</span>
+  <span class="c1">///&lt;summary&gt;Will track property changes&lt;/summary&gt;</span>
+  <span class="c1">///&lt;param name="target" type="Object"&gt;The observable&lt;/param&gt;</span>
+  <span class="c1">///&lt;param name="doTrack" type="boolean"&gt;true to track the observable, false otherwise&lt;/param&gt;</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="nx">doTrack</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">target</span><span class="p">.</span><span class="nx">isTracked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
@@ -144,7 +141,7 @@
 <span class="p">};</span>
 </pre></div>
 
-<p>Now, when declaring our collection of attendees, we pass in an initial value -a show id- when instantiating each <em>Attendee</em>. The updated fiddle to try this out is <a href="http://jsfiddle.net/pchiwan/R8AKP/">here</a>.</p>
+<p>Now, when declaring our collection of attendees, we pass in an initial value -a selected show id- when instantiating each <em>Attendee</em>. The updated fiddle to try this out is <a href="http://jsfiddle.net/pchiwan/R8AKP/">here</a>.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="k">this</span><span class="p">.</span><span class="nx">Attendees</span> <span class="o">=</span> <span class="nx">ko</span><span class="p">.</span><span class="nx">observableArray</span><span class="p">([</span>
   <span class="k">new</span> <span class="nx">Attendee</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -232,18 +229,25 @@ So the parameters we'll be using are those of the <em>options</em> binding, plus
 <span class="nt">&lt;/div&gt;</span>
 <span class="c">&lt;!-- /ko --&gt;</span>
 </pre></div>
-      </section>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/pchiwan/ko-filteredOptions/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/pchiwan/ko-filteredOptions/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/pchiwan/ko-filteredOptions"></a> is maintained by <a href="https://github.com/pchiwan">pchiwan</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">ko-filteredOptions maintained by <a href="https://github.com/pchiwan">pchiwan</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
