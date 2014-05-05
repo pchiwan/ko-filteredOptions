@@ -33,9 +33,9 @@
 
 <p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a> and I were working on at the time.</p>
 
-<p>We had a series of <code>&lt;select&gt;</code> controls the sources of which would be retrieved from server on page load through AJAX requests, and then populated through the use of observable arrays and the <em>options</em> binding. These controls were part of a form that was, in turn, also data-bound to a viewmodel.</p>
+<p>We had a <code>&lt;select&gt;</code> control the source of which was retrieved from server on page load by means of an AJAX request that populated an observable array, which was data-bound to the <code>&lt;select&gt;</code> control through the <em>options</em> binding. This control was part of a form that was, in turn, also data-bound to a viewmodel.</p>
 
-<p>For some reason we needed that, at some point, some of the <code>&lt;option&gt;</code> elements in our <code>&lt;select&gt;</code> controls could be hidden, filtered out, so that they could not be selected. Removing these <code>&lt;option&gt;</code> elements by removing the respective objects from their bound data-source was not an acceptable solution: our data-sources had to remain unchanged. Since these "particular options" had to be filtered according to a certain property's value in the source collection's objects, we came up with the idea for our own custom <em>options</em> binding.</p>
+<p>For some reason we needed that, at some point, some of the <code>&lt;option&gt;</code> elements in our <code>&lt;select&gt;</code> control could be hidden, filtered out, so that they could not be selected. Removing these <code>&lt;option&gt;</code> elements by removing the respective objects from their bound data-source was not an acceptable solution: our data-sources had to remain unchanged. These options had to be filtered out according to a particular value of a certain property in the source collection's objects, so we came up with the idea for our own custom <em>options</em> binding.</p>
 
 <h2>
 <a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h2>
