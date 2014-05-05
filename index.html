@@ -113,9 +113,9 @@
 <p>I worked around this issue thanks to a very simple but very powerful Knockout extender implemented by my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a>, so the credit for the following snippet of code goes to him.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">ko</span><span class="p">.</span><span class="nx">extenders</span><span class="p">.</span><span class="nx">track</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">doTrack</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// &lt;summary&gt;Will track property changes</span>
-  <span class="c1">// &lt;param name="target" type="Object"&gt;The observable&lt;/param&gt;</span>
-  <span class="c1">// &lt;param name="doTrack" type="boolean"&gt;true to track the observable, false otherwise&lt;/param&gt;</span>
+  <span class="c1">//&lt;summary&gt;Will track property changes&lt;/summary&gt;</span>
+  <span class="c1">//&lt;param name="target" type="Object"&gt;The observable&lt;/param&gt;</span>
+  <span class="c1">//&lt;param name="doTrack" type="boolean"&gt;true to track the observable, false otherwise&lt;/param&gt;</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="nx">doTrack</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">target</span><span class="p">.</span><span class="nx">isTracked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
