@@ -1,44 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>ko-filteredOptions by pchiwan</title>
 
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <title>ko-filteredOptions by pchiwan</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
+    <div class="wrapper">
+      <header>
         <h1>ko-filteredOptions</h1>
-        <h2>A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</h2>
-        <a href="https://github.com/pchiwan/ko-filteredOptions" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+        <p>A custom Knockout binding based on the &#39;options&#39; binding: it allows to filter certain items of a bound collection, keeping them from being attached to the &lt;select&gt; control.</p>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h2>
-<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
+        <p class="view"><a href="https://github.com/pchiwan/ko-filteredOptions">View the Project on GitHub <small>pchiwan/ko-filteredOptions</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/pchiwan/ko-filteredOptions/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/pchiwan/ko-filteredOptions/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/pchiwan/ko-filteredOptions">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
 <p>This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a> and I were working on at the time.</p>
 
-<p>We had a <code>&lt;select&gt;</code> control the source of which was retrieved from server on page load by means of an AJAX request that populated an observable array, which was data-bound to the <code>&lt;select&gt;</code> control through the <em>options</em> binding. This control was part of a form that was, in turn, also data-bound to a viewmodel.</p>
+<p>We had a <code>&lt;select&gt;</code> control the source of which was retrieved from server on page load by means of an AJAX request that populated the observable array which was data-bound to the <code>&lt;select&gt;</code> control through the 'options' binding. This control was part of a form that was, in turn, also data-bound to a viewmodel.</p>
 
-<p>For some reason we needed that, at some point, some of the <code>&lt;option&gt;</code> elements in our <code>&lt;select&gt;</code> control could be hidden, filtered out, so that they could not be selected. Removing these <code>&lt;option&gt;</code> elements by removing the respective objects from their bound data-source was not an acceptable solution: our data-sources had to remain unchanged. These options had to be filtered out according to a particular value of a certain property in the source collection's objects, so we came up with the idea for our own custom <em>options</em> binding.</p>
+<p>For some reason we needed that, at some point, some of the <code>&lt;option&gt;</code> elements in our <code>&lt;select&gt;</code> control could be hidden, filtered out, so that they could not be selected. Removing these <code>&lt;option&gt;</code> elements by removing the respective objects from their bound data-source was not an acceptable solution: our data-sources had to remain unchanged. These options had to be filtered out according to a particular value of a certain property in the source collection's objects, so we came up with the idea for our own custom 'options' binding.</p>
 
-<h2>
-<a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h2>
+<h1>
+<a name="so-what-does-it-do" class="anchor" href="#so-what-does-it-do"><span class="octicon octicon-link"></span></a>So, what does it do?</h1>
 
 <p>It's probably easier to understand with an example so here it goes. We define to viewmodels, <em>Attendee</em> and <em>Show</em>.</p>
 
@@ -71,7 +71,7 @@
 <span class="p">]);</span>
 </pre></div>
 
-<p>Now, as you may have already imagined, our intention is to pair each <em>Attendee</em> with a <em>Show</em>. The collection of shows available to the attendees will be filtered according to whether or not the <em>Show</em>'s property <code>IsAvailable</code> is set to <code>true</code>. Head to <a href="http://jsfiddle.net/pchiwan/z7EYc/">this fiddle</a> to see it working. Here's the snippet of html code where you can see the our custom data binding <em>filteredOptions</em>.</p>
+<p>Now, as you may have already imagined, our intention is to pair each <em>Attendee</em> with a <em>Show</em>. The collection of shows available to the attendees will be filtered according to whether or not the <em>Show</em>'s property <code>IsAvailable</code> is set to <code>true</code>. Head to <a href="http://jsfiddle.net/pchiwan/z7EYc/">this fiddle</a> to see it working. Here's the snippet of html code where you can see the our custom data binding 'filteredOptions'.</p>
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"example2"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left"</span><span class="nt">&gt;</span>
@@ -93,19 +93,19 @@
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
 
-<h2>
-<a name="how-does-it-work" class="anchor" href="#how-does-it-work"><span class="octicon octicon-link"></span></a>How does it work?</h2>
+<h1>
+<a name="how-does-it-work" class="anchor" href="#how-does-it-work"><span class="octicon octicon-link"></span></a>How does it work?</h1>
 
-<p>Basically I copied the code of the original <em>options</em> binding and enhanced it by adding the tiny snippet of logic that does our magic trick. And the trick consists in evaluating a certain property in the source collection's objects and, depending on this property's value, keep these objects from being appended as <code>&lt;option&gt;</code> elements to the <code>&lt;select&gt;</code> control or not.</p>
+<p>Basically I copied the code of the original 'options' binding and enhanced it by adding the tiny snippet of logic that does our magic trick. And the trick consists in evaluating a certain property in the source collection's objects and, depending on this property's value, keep these objects from being appended as <code>&lt;option&gt;</code> elements to the <code>&lt;select&gt;</code> control or not.</p>
 
 <p>The only drawback is that we also had to copy some Knockout's private utility methods in order to expose them (because they are not exposed in the production version).</p>
 
-<h2>
-<a name="before-we-get-into-detail" class="anchor" href="#before-we-get-into-detail"><span class="octicon octicon-link"></span></a>Before we get into detail...</h2>
+<h1>
+<a name="before-we-get-into-detail" class="anchor" href="#before-we-get-into-detail"><span class="octicon octicon-link"></span></a>Before we get into detail...</h1>
 
 <p>Following up on the previous example fiddle, imagine this situation: we have a collection of <em>Attendee</em>, we select a <em>Show</em> for each of them, and save the form. Assuming there is a stock of available tickets for each <em>Show</em>, when a <em>Show</em> is sold out we should mark it as not available by setting <code>IsAvailable</code> to <code>false</code>. </p>
 
-<p>Doing this will trigger an update in the <em>filteredOptions</em> data binding, causing the source to be re-evaluated and, therefore, the <code>&lt;option&gt;</code> elements to be first removed from and then re-attached to their respective data-bound <code>&lt;select&gt;</code> controls. Thus, a <em>Show</em> that had been previously selected for an <em>Attendee</em> before becoming unavailable will suddenly disappear from the data-bound <code>&lt;select&gt;</code> control's available options; in short: the <em>Show</em> is no longer a selectable option to any of the <em>Attendee</em>, even those who had selected the <em>Show</em> when it was still available. And that's not ok!</p>
+<p>Doing this will trigger an update in the 'filteredOptions' data binding, causing the source to be re-evaluated and, therefore, the <code>&lt;option&gt;</code> elements to be first removed from and then re-attached to their respective data-bound <code>&lt;select&gt;</code> controls. Thus, a <em>Show</em> that had been previously selected for an <em>Attendee</em> before becoming unavailable will suddenly disappear from the data-bound <code>&lt;select&gt;</code> control's available options; in short: the <em>Show</em> is no longer a selectable option to any of the <em>Attendee</em>, even those who had selected the <em>Show</em> when it was still available. And that's not ok!</p>
 
 <p>I worked around this issue thanks to a very simple but very powerful Knockout extender implemented by my colleague <a href="https://github.com/codecoding" class="user-mention">@codecoding</a>, so the credit for the following snippet of code goes to him.</p>
 
@@ -151,33 +151,45 @@
 <span class="p">]);</span>
 </pre></div>
 
-<p>We also need to update the markup accordingly: we must add another parameter to the <em>filteredOptions</em> data binding.</p>
+<p>We also need to update the markup accordingly: we must add another parameter to the 'filteredOptions' data binding.</p>
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;select</span> <span class="na">data-bind=</span><span class="s">"filteredOptions: $root.Shows, optionsFiltering: { propertyName: 'IsAvailable', propertyValue: false, exceptionValue: attendee.SelectedShow.originalValue }, optionsValue: 'Id', optionsText: 'Name', optionsCaption: 'Choose a show', value: attendee.SelectedShow"</span><span class="nt">&gt;&lt;/select&gt;</span>
 </pre></div>
 
-<p>As you can see for yourself in the fiddle, when making a <em>Show</em> unavailable, the corresponding <code>&lt;option&gt;</code> will disappear from every <code>&lt;select&gt;</code> control except for those which had that <code>&lt;option&gt;</code> selected from the very beginning. We achieve this through the use of the <em>tracked</em> extender, along with the parameter <code>exceptionValue</code>. Keep reading to learn...</p>
+<p>As you can see for yourself in the fiddle, when making a <em>Show</em> unavailable, the corresponding <code>&lt;option&gt;</code> will disappear from every <code>&lt;select&gt;</code> control except for those which had that <code>&lt;option&gt;</code> selected from the very beginning. We achieve this through the use of the 'tracked' extender, along with the parameter <code>exceptionValue</code>. Keep reading to learn...</p>
 
-<h2>
-<a name="how-do-i-use-it" class="anchor" href="#how-do-i-use-it"><span class="octicon octicon-link"></span></a>How do I use it?</h2>
+<h1>
+<a name="how-do-i-use-it" class="anchor" href="#how-do-i-use-it"><span class="octicon octicon-link"></span></a>How do I use it?</h1>
 
-<p>You must use the <em>filteredOptions</em> data binding instead of the original <em>options</em> binding. Keep in mind, though, that in order for our data binding to work, the data source must necessarily be a collection of JavaScript objects, a collection of strings won't do! 
-So the parameters we'll be using are those of the <em>options</em> binding, plus a few more we've added. The examples provided are related to the previously referenced fiddle.</p>
+<p>The data binding parameters you'll be using are those of the 'options' binding, plus a few more we've added. The examples provided are related to the previously referenced fiddle. These are our custom parameters:</p>
 
-<ul>
-<li>
-<strong>propertyName</strong>. </li>
-</ul><p>It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the <code>&lt;select&gt;</code> control. It must be written between single quotes. I.e.: <code>propertyName: 'IsAvailable'</code>.</p>
+<h3>
+<a name="filteredoptions" class="anchor" href="#filteredoptions"><span class="octicon octicon-link"></span></a><strong>filteredOptions</strong>.</h3>
 
-<ul>
-<li>
-<strong>propertyValue</strong>. </li>
-</ul><p>Which value will cause the object to be ruled out when the property with specified <code>propertyName</code> is evaluated. Mind this is negative logic: if the property's value is equal to this specified value, the object will NOT be attached to the <code>&lt;select&gt;</code> control. I.e.: <code>propertyValue: false</code>.</p>
+<p>Use this instead of the original 'options' binding. Keep in mind, though, that in order for our data binding to work, the data source must necessarily be a collection of JavaScript objects, a collection of strings won't do! </p>
 
-<ul>
-<li>
-<strong>exceptionValue</strong>. </li>
-</ul><p>I.e.: <code>exceptionValue: attendee.SelectedShow.originalValue</code>.</p>
+<h3>
+<a name="optionsfiltering" class="anchor" href="#optionsfiltering"><span class="octicon octicon-link"></span></a><strong>optionsFiltering</strong>.</h3>
+
+<p>This holds all our custom binding's parameters.</p>
+
+<h4>
+<a name="propertyname" class="anchor" href="#propertyname"><span class="octicon octicon-link"></span></a><strong>propertyName</strong>.</h4>
+
+<p>It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the <code>&lt;select&gt;</code> control. It must be written between single quotes.<br>
+I.e.: <code>propertyName: 'IsAvailable'</code>.</p>
+
+<h4>
+<a name="propertyvalue" class="anchor" href="#propertyvalue"><span class="octicon octicon-link"></span></a><strong>propertyValue</strong>.</h4>
+
+<p>An expression the resulting value of which should cause objects to be ruled out when their property with specified <code>propertyName</code> is evaluated. Mind this is negative logic: if the property's value is equal to this expression's value, the object will NOT be attached to the <code>&lt;select&gt;</code> control.<br>
+I.e.: <code>propertyValue: false</code>.</p>
+
+<h4>
+<a name="exceptionvalue" class="anchor" href="#exceptionvalue"><span class="octicon octicon-link"></span></a><strong>exceptionValue</strong>.</h4>
+
+<p>An expression the resulting value of which should be an exception to the filtering. When the property with specified <code>propertyName</code> is evaluated, if its value is equal to this expression's value, the object will be attached to the <code>&lt;select&gt;</code> control regardless of what <code>propertyValue</code> says.
+I.e.: <code>exceptionValue: attendee.SelectedShow.originalValue</code>.</p>
 
 <h2>
 <a name="another-example" class="anchor" href="#another-example"><span class="octicon octicon-link"></span></a>Another example</h2>
@@ -229,25 +241,13 @@ So the parameters we'll be using are those of the <em>options</em> binding, plus
 <span class="nt">&lt;/div&gt;</span>
 <span class="c">&lt;!-- /ko --&gt;</span>
 </pre></div>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/pchiwan/ko-filteredOptions/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/pchiwan/ko-filteredOptions/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/pchiwan/ko-filteredOptions"></a> is maintained by <a href="https://github.com/pchiwan">pchiwan</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/pchiwan">pchiwan</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-
-  
+    <script src="javascripts/scale.fix.js"></script>
+    
   </body>
 </html>
