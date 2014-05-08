@@ -163,36 +163,36 @@
 
 <p>The data binding parameters you'll be using are those of the 'options' binding, plus a few more we've added. The examples provided are related to the previously referenced fiddle. These are our custom parameters:</p>
 
-<h3>
-<a name="filteredoptions" class="anchor" href="#filteredoptions"><span class="octicon octicon-link"></span></a><strong>filteredOptions</strong>.</h3>
+<h2>
+<a name="filteredoptions" class="anchor" href="#filteredoptions"><span class="octicon octicon-link"></span></a><strong>filteredOptions</strong>.</h2>
 
 <p>Use this instead of the original 'options' binding. Keep in mind, though, that in order for our data binding to work, the data source must necessarily be a collection of JavaScript objects, a collection of strings won't do! </p>
 
-<h3>
-<a name="optionsfiltering" class="anchor" href="#optionsfiltering"><span class="octicon octicon-link"></span></a><strong>optionsFiltering</strong>.</h3>
+<h2>
+<a name="optionsfiltering" class="anchor" href="#optionsfiltering"><span class="octicon octicon-link"></span></a><strong>optionsFiltering</strong>.</h2>
 
 <p>This holds all our custom binding's parameters.</p>
 
-<h4>
-<a name="propertyname" class="anchor" href="#propertyname"><span class="octicon octicon-link"></span></a><strong>propertyName</strong>.</h4>
+<h3>
+<a name="propertyname" class="anchor" href="#propertyname"><span class="octicon octicon-link"></span></a><strong>propertyName</strong>.</h3>
 
 <p>It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the <code>&lt;select&gt;</code> control. It must be written between single quotes.<br>
 I.e.: <code>propertyName: 'IsAvailable'</code>.</p>
 
-<h4>
-<a name="propertyvalue" class="anchor" href="#propertyvalue"><span class="octicon octicon-link"></span></a><strong>propertyValue</strong>.</h4>
+<h3>
+<a name="propertyvalue" class="anchor" href="#propertyvalue"><span class="octicon octicon-link"></span></a><strong>propertyValue</strong>.</h3>
 
 <p>An expression the resulting value of which should cause objects to be ruled out when their property with specified <code>propertyName</code> is evaluated. Mind this is negative logic: if the property's value is equal to this expression's value, the object will NOT be attached to the <code>&lt;select&gt;</code> control.<br>
 I.e.: <code>propertyValue: false</code>.</p>
 
-<h4>
-<a name="exceptionvalue" class="anchor" href="#exceptionvalue"><span class="octicon octicon-link"></span></a><strong>exceptionValue</strong>.</h4>
+<h3>
+<a name="exceptionvalue" class="anchor" href="#exceptionvalue"><span class="octicon octicon-link"></span></a><strong>exceptionValue</strong>.</h3>
 
 <p>An expression the resulting value of which should be an exception to the filtering. When the property with specified <code>propertyName</code> is evaluated, if its value is equal to this expression's value, the object will be attached to the <code>&lt;select&gt;</code> control regardless of what <code>propertyValue</code> says.
 I.e.: <code>exceptionValue: attendee.SelectedShow.originalValue</code>.</p>
 
-<h2>
-<a name="another-example" class="anchor" href="#another-example"><span class="octicon octicon-link"></span></a>Another example</h2>
+<h1>
+<a name="another-example" class="anchor" href="#another-example"><span class="octicon octicon-link"></span></a>Another example</h1>
 
 <p>Here's another usage example, the fiddle for which you will find <a href="http://jsfiddle.net/pchiwan/c55g2/">here</a>. We start by defining, again, two viewmodels: <em>Guest</em> and <em>Meal</em>.</p>
 
