@@ -1,10 +1,10 @@
 ko-filteredOptions
 ==================
 
-A custom Knockout binding based on the 'options' binding: it allows to filter certain items of a bound collection, keeping them from being attached to the <select> control.
+A custom Knockout binding based on the 'options' binding: it allows to filter certain items of a bound collection, keeping them from being attached to the `<select>` control.
 
 # Introduction
-This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague @codecoding and I were working on at the time.
+This is a quite simple custom Knockout binding that I implemented due to a particular need I had with the project my colleague [@codecoding](https://github.com/codecoding/) and I were working on at the time.
 
 We had a `<select>` control the source of which was retrieved from server on page load by means of an AJAX request that populated the observable array which was data-bound to the `<select>` control through the 'options' binding. This control was part of a form that was, in turn, also data-bound to a viewmodel.
 
@@ -73,7 +73,7 @@ Following up on the previous example fiddle, imagine this situation: we have a c
 
 Doing this will trigger an update in the 'filteredOptions' data binding, causing the source to be re-evaluated and, therefore, the `<option>` elements to be first removed from and then re-attached to their respective data-bound `<select>` controls. Thus, a _Show_ that had been previously selected for an _Attendee_ before becoming unavailable will suddenly disappear from the data-bound `<select>` control's available options; in short: the _Show_ is no longer a selectable option to any of the _Attendee_, even those who had selected the _Show_ when it was still available. And that's not ok!
 
-I worked around this issue thanks to a very simple but very powerful Knockout extender implemented by my colleague @codecoding, so the credit for the following snippet of code goes to him.
+I worked around this issue thanks to a very simple but very powerful Knockout extender implemented by my colleague [@codecoding](https://github.com/pchiwan/), so the credit for the following snippet of code goes to him.
 ```javascript
 ko.extenders.track = function (target, doTrack) {
   ///<summary>Will track property changes</summary>
@@ -122,21 +122,21 @@ As you can see for yourself in the fiddle, when making a _Show_ unavailable, the
 
 # How do I use it?
 The data binding parameters you'll be using are those of the 'options' binding, plus a few more we've added. The examples provided are related to the previously referenced fiddle. These are our custom parameters:
-## __filteredOptions__. 
+### __filteredOptions__. 
 Use this instead of the original 'options' binding. Keep in mind, though, that in order for our data binding to work, the data source must necessarily be a collection of JavaScript objects, a collection of strings won't do! 
 
-## __optionsFiltering__. 
-This holds all our custom binding's parameters.
+### __optionsFiltering__. 
+A dictionary holding the following parameters.
 
-### __propertyName__. 
+#### __propertyName__. 
 It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the `<select>` control. It must be written between single quotes.  
 I.e.: `propertyName: 'IsAvailable'`.
 
-### __propertyValue__. 
+#### __propertyValue__. 
 An expression the resulting value of which should cause objects to be ruled out when their property with specified `propertyName` is evaluated. Mind this is negative logic: if the property's value is equal to this expression's value, the object will NOT be attached to the `<select>` control.  
 I.e.: `propertyValue: false`.
 
-### __exceptionValue__. 
+#### __exceptionValue__. 
 An expression the resulting value of which should be an exception to the filtering. When the property with specified `propertyName` is evaluated, if its value is equal to this expression's value, the object will be attached to the `<select>` control regardless of what `propertyValue` says.
 I.e.: `exceptionValue: attendee.SelectedShow.originalValue`.
 
