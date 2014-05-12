@@ -11,7 +11,7 @@ We had a `<select>` control the source of which was retrieved from server on pag
 For some reason we needed that, at some point, some of the `<option>` elements in our `<select>` control could be hidden, filtered out, so that they could not be selected. Removing these `<option>` elements by removing the respective objects from their bound data-source was not an acceptable solution: our data-sources had to remain unchanged. These options had to be filtered out according to a particular value of a certain property in the source collection's objects, so we came up with the idea for our own custom 'options' binding.
 
 # So, what does it do?
-It's probably easier to understand with an example so here it goes. We define to viewmodels, _Attendee_ and _Show_.
+It's probably easier to understand with an example so here it goes. We define two viewmodels, _Attendee_ and _Show_.
 ```javascript
 var Attendee = function (name, show) {
   this.Name = ko.observable(name ? name : '');
