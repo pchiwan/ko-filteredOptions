@@ -11,10 +11,35 @@
 //Usage: 
 //  + accessors are all exactly the same as in the 'options' binding, but I've added an accessor of my own: optionsFiltering
 //  + optionsFiltering: a dictionary containing the following properties
-//          * propertyName: name of the filtering property in the bound ViewModel (the property which will be checked in order to know if the ViewModel must be ruled out). i.e.: 'IsActive'
-//          * propertyValue: value that the filtering property must have in order for the ViewModel to be ruled out. i.e.: false
-//          * exceptionValue: value that will exclude the ViewModel from being ruled out even if the filter evaluates true. The exceptionValue is compared with the optionValue
-// i.e.: optionsFiltering: { propertyName: 'IsActive', propertyValue: false, exceptionValue: 42 }
+//
+//          * propertyValue: 
+//					Mandatory.
+//					Type: 			Expression
+//					Description: 	Value or collection of values that the array entry or its object/viewmodel's filtering property (if using propertyName) must have 
+//									in order for the array entry to be ruled out. 
+//					Examples: 		false/42/var1/[var1, var2]/var1 > var2/func() == false/var1 == true ? var2 : var3/var4.indexOf(42)
+//
+//          * propertyName: 
+//					Optional. 	
+//					Type: 			String
+//					Description: 	If each array entry is an object/viewmodel then this indicates the name of the filtering property in the bound object/viewmodel 
+//									(aka the property which will be checked in order to know if the object/viewmodel must be ruled out). 
+//									If you don't provide a propertyName, then it's assumed that each array entry is a simple type (number, string, boolean)
+//					Examples: 		'IsActive'/'IsEnabled'/'HasChanges'/'Stamp'
+//
+//          * exceptionValue: 
+//					Optional:
+//					Type: 			Expression
+//					Description: 	Value or collection of values that will exclude the array entry from being ruled out even if the filter evaluates true. 
+//									The exceptionValue is compared with the optionValue.
+//					Examples:  		false/42/var1/[var1, var2]/var1 > var2/func() == false/var1 == true ? var2 : var3/var4.indexOf(42)
+//
+//	Examples: 		optionsFiltering: { propertyValue: var1 }
+//					optionsFiltering: { propertyName: 'IsActive', propertyValue: false }
+//					optionsFiltering: { propertyName: 'Range', propertyValue: [5, 10, 15], exceptionValue: var1 }
+//					optionsFiltering: { propertyName: 'IsEnabled', propertyValue: var1 > var2, exceptionValue: [var3, var4] }
+//					optionsFiltering: { propertyName: 'MeaningOfLife', propertyValue: var1.indexOf(var2), exceptionValue: 42 }
+//
 ko.bindingHandlers.filteredOptions = {
     update: function (element, valueAccessor, allBindingsAccessor) {
         if (ko.exposed.tagNameLower(element) !== 'select') {
@@ -94,13 +119,32 @@ ko.bindingHandlers.filteredOptions = {
                         propValue = arrayEntry;
                     }
 
-                    //is this an exception?
-                    var exception = ko.utils.unwrapObservable(filter.exceptionValue) !== undefined &&
-                                    ko.utils.unwrapObservable(optionValue) == ko.utils.unwrapObservable(filter.exceptionValue);
+                    var evalCondition = ko.utils.unwrapObservable(filter.propertyValue);
+                    var evalPropValue = ko.utils.unwrapObservable(propValue);
+                    var evalException = ko.utils.unwrapObservable(filter.exceptionValue);
+                    var evalOptionVal = ko.utils.unwrapObservable(optionValue);
 
-                    if (ko.utils.unwrapObservable(propValue) == ko.utils.unwrapObservable(filter.propertyValue) && !exception) {
-                        continue;                   //keep going, don't append this option to the select!
-                    }
+                    var exception = false;
+
+                    //is this an exception?
+                    if (evalException !== undefined) {
+                    	if (evalException instanceof Array) {
+                    		exception = ko.utils.arrayIndexOf(evalException, evalOptionVal) >= 0;
+                    	} else {
+                    		exception = evalException === evalOptionVal;
+                    	}
+                	}
+ 
+ 					//did you know? propertyValue can be an array, this is some seriously powerful sh**!
+                   	if (evalCondition instanceof Array) {
+                       	if (ko.utils.arrayIndexOf(evalCondition, evalPropValue) >= 0 && !exception) {
+                       		continue;                   //keep going, don't append this option to the select!
+                       	}
+                   	} else {
+                       	if (evalCondition === evalPropValue && !exception) {
+                           	continue;                   //keep going, don't append this option to the select!
+                       	}
+                   	}
                 }
 
                 //* Fi PCHIWAN *********************************************************************//
