@@ -1,5 +1,5 @@
 ﻿/********************
- * 'filteredOptions' binding for knockout.js
+ * 'filteredOptions' binding for Knockout.js
  * by Sílvia Mur Blanch aka PchiwaN
  * https://github.com/pchiwan/ko-filteredOptions
  ********************/
@@ -25,7 +25,7 @@
 //					Description: 	If each array entry is an object/viewmodel then this indicates the name of the filtering property in the bound object/viewmodel 
 //									(aka the property which will be checked in order to know if the object/viewmodel must be ruled out). 
 //									If you don't provide a propertyName, then it's assumed that each array entry is a simple type (number, string, boolean)
-//					Examples: 		'IsActive'/'IsEnabled'/'HasChanges'/'Stamp'
+//					Examples: 		'IsActive'/'IsEnabled'/'MeaningOfLife'/'Range'
 //
 //          * exceptionValue: 
 //					Optional:

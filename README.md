@@ -128,17 +128,30 @@ Use this instead of the original 'options' binding. Keep in mind, though, that i
 ### __optionsFiltering__. 
 A dictionary holding the following parameters.
 
-#### __propertyName__. 
-It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the `<select>` control. It must be written between single quotes.  
-I.e.: `propertyName: 'IsAvailable'`.
-
 #### __propertyValue__. 
-An expression the resulting value of which should cause objects to be ruled out when their property with specified `propertyName` is evaluated. Mind this is negative logic: if the property's value is equal to this expression's value, the object will NOT be attached to the `<select>` control.  
-I.e.: `propertyValue: false`.
+An __expression__ the resulting value of which should cause objects to be ruled out when their property with specified `propertyName` is evaluated. Mind this is negative logic: if the property's value is equal to this expression's value, the object will NOT be attached to the `<select>` control.  I.e.: 
+`propertyValue: false`
+`propertyValue: var1`
+`propertyValue: [var1, var2]`
+`propertyValue: func() == false`
+`propertyValue: var1 == true ? var2 : var3`
+`propertyValue: var4.indexOf(42)`
+
+#### __propertyName__. 
+__Optional__. It's the name of the property in the source collection's objects that will be evaluated to determine whether or not they must be attached to the `<select>` control. It must be written between single quotes. I.e.: 
+`propertyName: 'IsAvailable'`
+`propertyName: 'IsEnabled'`
+`propertyName: 'MeaningOfLife'`
 
 #### __exceptionValue__. 
-An expression the resulting value of which should be an exception to the filtering. When the property with specified `propertyName` is evaluated, if its value is equal to this expression's value, the object will be attached to the `<select>` control regardless of what `propertyValue` says.
-I.e.: `exceptionValue: attendee.SelectedShow.originalValue`.
+__Optional__. An __expression__ the resulting value of which should be an exception to the filtering. When the property with specified `propertyName` is evaluated, if its value is equal to this expression's value, the object will be attached to the `<select>` control regardless of what `propertyValue` says. I.e.: 
+`exceptionValue: attendee.SelectedShow.originalValue`
+`exceptionValue: false`
+`exceptionValue: var1`
+`exceptionValue: [var1, var2]`
+`exceptionValue: func() == false`
+`exceptionValue: var1 == true ? var2 : var3`
+`exceptionValue: var4.indexOf(42)`
 
 # Another example
 Here's another usage example, the fiddle for which you will find [here](http://jsfiddle.net/pchiwan/c55g2/). We start by defining, again, two viewmodels: _Guest_ and _Meal_.
