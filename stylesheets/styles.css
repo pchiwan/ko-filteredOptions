@@ -4,6 +4,7 @@ body {
   padding:50px;
   font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#777;
+  background: url(../images/body-bg.png) 0 0 repeat;
   font-weight:300;
 }
 
@@ -21,14 +22,23 @@ h1, h2, h3 {
 }
 
 h1 {
+  font-family: 'Signika';
   font-size:28px;
+  font-weight: bold;
 }
 
 h2 {
   color:#393939;
+  font-family: 'Signika';
+  font-size: 24px;
 }
 
-h3, h4, h5, h6 {
+h3 {
+  font-family: 'Signika';
+  font-size: 20px;
+}
+
+h4, h5, h6 {
   color:#494949;
 }
 
@@ -50,6 +60,10 @@ a small {
   margin:0 auto;
 }
 
+.section{
+  border-left: 1px solid #e5e5e5;
+}
+
 blockquote {
   border-left:1px solid #e5e5e5;
   margin:0;
@@ -58,7 +72,7 @@ blockquote {
 }
 
 code, pre {
-  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+  font-family:Monaco, Lucida Console, Terminal;
   color:#333;
   font-size:12px;
 }
@@ -95,10 +109,14 @@ img {
   max-width:100%;
 }
 
-header {
-  width:270px;
-  float:left;
-  position:fixed;
+header {  
+  /*float:left;
+  position:fixed;*/
+  margin-right: 15px;
+}
+
+header h1{
+  font-size: 30px;
 }
 
 header ul {
@@ -139,7 +157,8 @@ header ul a {
 }
 
 strong {
-  color:#222;
+  /*color:#222;*/
+  color: #4B4B4B;
   font-weight:700;
 }
 
@@ -160,7 +179,6 @@ header ul a strong {
 }
 
 section {
-  width:500px;
   float:right;
   padding-bottom:50px;
 }
@@ -177,7 +195,6 @@ hr {
 }
 
 footer {
-  width:270px;
   float:left;
   position:fixed;
   bottom:50px;
